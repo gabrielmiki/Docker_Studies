@@ -146,3 +146,23 @@ The previous case of mounting is called bind. There are two more types: the name
   - Dockerfile Volume: volumes that are created by the dockerfile instructions. They are also created inside a specific directory, but they do not have a name.
 
 ### Other Storage Commands
+It is also possible to create a bind mount by using the "mount" command as well.
+```
+docker run -dti --mount type=bind,src=/hostdir,dst=/containerdir image_name
+```
+Another possibility is to create a read only mount:
+```
+docker run -dti --mount type=bind,src=/hostdir,dst=/containerdir,ro image_name
+```
+Cheking the volumes that already exists:
+```
+docker volumes ls
+```
+Creating a volume:
+```
+docker volume create volume_name
+```
+Attaching a container to a volume:
+```
+docker run -dti --name containe_name --mount type=volume,src=volume_name,dst=/data image_name
+```
