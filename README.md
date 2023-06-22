@@ -129,3 +129,20 @@ To view the available databases:
 show databases;
 ```
 
+### Creating a New Place for Data Storage
+Through the command "docker inspect" it is possible to verify that the standart storage is placed inside the container. In order to change this place we do:
+```
+docker run -e MYSQL_ROOT_PASSWORD=desired_password --name container_name -d -p 3306:3306 --volume=/new_place:old_place image_name
+```
+This original place can be found in the volume type after running the "docker inspect" command.
+
+### The Data Storage Types
+The previous case of mounting is called bind. There are two more types: the named and Dockerfile volume.
+  - Bind: bindding a host directory inside the container.
+    - ```docker run -v /hostdir:/containerdir image_name```
+  - Named: there are ways to create docker volumes. They are created inside a specific directory in the host
+    - Creating a Docker Volume: ```docker volume create volume_name```
+    - Configuring the container to store data inside the created volume: ```docker run -v volume_name:/containerdir image_name```
+  - Dockerfile Volume: volumes that are created by the dockerfile instructions. They are also created inside a specific directory, but they do not have a name.
+
+### Other Storage Commands
