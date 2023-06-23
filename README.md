@@ -167,4 +167,36 @@ Attaching a container to a volume:
 docker run -dti --name containe_name --mount type=volume,src=volume_name,dst=/data image_name
 ```
 
-### Creating a with Apache
+### Creating a Web Application with Apache
+The Apache image is called "httpd".
+```
+docker pull httpd
+```
+The content to be displayed is placed inside a directory in the host and this directory is binded to the container.
+```
+docker run -d --name apache_container -p 80:80 --volume=/hostdir:/usr/local/apache2/htdocs httpd
+```
+
+## Controlling Memory and CPU
+In order to visualize the memory and processing utilization by a container we use the ```docker stats container_name```.
+To change the configuratios of a conatainer we use the "update" command. To update the maximun memory and processing capability that a created container is allowed to use we run:
+```
+docker update container_name -m 128M --cpus 0.2
+``` 
+
+## Other Commands
+- ```docker info```: server informations.
+- ```docker container logs container_name```: execution logs.
+- ```docker container top container_name```: processes in execution.
+
+## Network
+Listing the avaiable networks
+```docker network ls```
+Every created container is added to the bridge network and has acess to the host network, thats the reason that when we indicate the host ip we have acess to the containers.
+```docker network inspect bridge``` Shows the containers in the bridge network.
+Containers in the same network have acess to each other. If you want to isolate a group of containers, it possible to create a network and place the container in there. Creating a network: ```docker network create network_name```.
+Placing a container inside the network created: 
+```
+docker run -dti --name container_name --network network_name image_name
+```
+Deleting a network: ```docker network rm network_name```
