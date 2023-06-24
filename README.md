@@ -200,3 +200,31 @@ Placing a container inside the network created:
 docker run -dti --name container_name --network network_name image_name
 ```
 Deleting a network: ```docker network rm network_name```
+
+## Dockerfile
+To create an application inside a container without using the Dockerfile, it is necessary to create a container interactive trought the ```run -dti``` command and make the alterations inside the container manually.
+  1. ```docker run -dti --name ubuntu-python ubuntu```
+  2. ```docker exec -ti ubuntu-python bash```
+  3. ```apt update```
+  4. ```apt install python3 vim```
+  5. ```apt clean```
+  6. ```cd app_dir```
+  7. ```vi app.py```
+  8. Write Code
+  9. Outside the container: ```docker exec -ti ubuntu-python python3 /app_dir/app.py```
+WHen using a Dockerfile it possible to do all these steps in a file.
+```
+FROM ubuntu
+RUN apt update && apt install -y python3 && apt clean
+COPY /hostdirr/app.py /containerdir/app.py
+CMD python3 /containerdir/app.py
+```
+Then we build the dockerfile: ```docker build dockerfile_path -t image_name```
+
+### Web Server with Dockerfile
+
+
+
+
+
+
