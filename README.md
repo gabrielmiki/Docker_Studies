@@ -221,10 +221,10 @@ CMD python3 /containerdir/app.py
 ```
 Then we build the dockerfile: ```docker build dockerfile_path -t image_name```
 
-### Web Server with Dockerfile
-
-
-
-
-
-
+## Project 1: Web Server with Dockerfile
+To create a web server we will be using apache installed inside a debian container. All the container configuration will be done trough a docker file.
+First we will get the web structure trough a "wget" and, since there is a commanda in dockerfile that discompacts a .tar arquive we will be using such a format.
+```
+wget
+```
+Then we will write the dockerfile content in witch we will define the base memory (```FROM```), some environmental variables (```ENV```) and some commands (```CMD```).
