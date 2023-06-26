@@ -261,3 +261,24 @@ Sending the image.
 ```
 docker push user_name/image_name:version
 ```
+
+## Docker Registry for Image Storage
+It is possible to use a cotainer to store the images you create.
+```
+docker run -d -p 5000:5000 --restart=always --name registry registry
+```
+To send the image to the container registry it is necessary to tag it with the container ip and the port it is listening.
+```
+docker image tag image_id localhost:5000/image_name:version
+```
+To push the image:
+```
+docker push localhost:5000/image_name:version
+```
+
+## Docker Compose
+The Docker Compose tool is used to manage two or more containers. To do that you create a YAML file to define the applications and command them all.
+
+In the YAML file it is necessary to identify the services, the ports, the volumes and the networks. We also define the YAML version to be used, witch is related to a specific docker version.
+
+In this example we will define a mysql service along with the corresponding image, environment variables, ports, volumes and networks. An adminer container with the same spacifications and the configuration to create my network.
