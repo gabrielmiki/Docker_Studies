@@ -229,6 +229,10 @@ wget http://site1368633667.hospedagemdesites.ws/site1.zip
 ```
 Then we will write the dockerfile content in witch we will define the base memory (```FROM```), some environmental variables (```ENV```) and some commands (```CMD```).
 
+![Building the Image](./Images/debian.png)
+
+![Container Run](./Images/running_web_server_container.png)
+
 ## Multistage Images
 Here we will create a double stage image. First we will create the binary of an application and then send it to a Linux container.
 
@@ -239,6 +243,10 @@ Since we are going to use the binary result from the first image, we call the fi
 FROM golang as exec
 ```
 Other important detail is the use of the ```RUN``` command instead of the ```CMD``` command. Tihs is done becouse we will change the the first image when generating a binary file.
+
+![The overall size of the Image+Application](./Images/app_go_image_size.png)
+
+![The result of the Container Run](./Images/app_go_image_result.png)
 
 ## Sending an Image to the Docker Hub Repository
 Login in a docker hub account.
