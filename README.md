@@ -225,6 +225,31 @@ Then we build the dockerfile: ```docker build dockerfile_path -t image_name```
 To create a web server we will be using apache installed inside a debian container. All the container configuration will be done trough a docker file.
 First we will get the web structure trough a "wget" and, since there is a commanda in dockerfile that discompacts a .tar arquive we will be using such a format.
 ```
-wget
+wget http://site1368633667.hospedagemdesites.ws/site1.zip
 ```
 Then we will write the dockerfile content in witch we will define the base memory (```FROM```), some environmental variables (```ENV```) and some commands (```CMD```).
+
+## Multistage Images
+Here we will create a double stage image. First we will create the binary of an application and then send it to a Linux container.
+
+With multistage it is possible to create compilations in different stages. This way, if my application and my first image are big, when we transfer the application to a smaller image we get a small overall image. 
+
+Since we are going to use the binary result from the first image, we call the first image as executable in order to be able to import the file in the next stage.
+```
+FROM golang as exec
+```
+Other important detail is the use of the ```RUN``` command instead of the ```CMD``` command. Tihs is done becouse we will change the the first image when generating a binary file.
+
+## Sending an Image to the Docker Hub Repository
+Login in a docker hub account.
+```
+docker login
+```
+When genarating the image define your user name.
+```
+docker build . -t user_name/image_name:version 
+```
+Sending the image.
+```
+docker push user_name/image_name:version
+```
