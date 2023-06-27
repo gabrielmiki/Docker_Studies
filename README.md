@@ -192,7 +192,7 @@ docker update container_name -m 128M --cpus 0.2
 ## Network
 Listing the avaiable networks
 ```docker network ls```
-Every created container is added to the bridge network and has acess to the host network, thats the reason that when we indicate the host ip we have acess to the containers.
+Every created container is added to the bridge network and has acess to the host network, thats the reason that when we indicate the host ip we have acess to the containers.   
 ```docker network inspect bridge``` Shows the containers in the bridge network.
 Containers in the same network have acess to each other. If you want to isolate a group of containers, it possible to create a network and place the container in there. Creating a network: ```docker network create network_name```.
 Placing a container inside the network created: 
@@ -222,8 +222,8 @@ CMD python3 /containerdir/app.py
 Then we build the dockerfile: ```docker build dockerfile_path -t image_name```
 
 ## Project 1: Web Server with Dockerfile
-To create a web server we will be using apache installed inside a debian container. All the container configuration will be done trough a docker file.
-First we will get the web structure trough a "wget" and, since there is a commanda in dockerfile that discompacts a .tar arquive we will be using such a format.
+To create a web server we will be using apache installed inside a debian container. All the container configuration will be done trough a docker file.    
+First we will get the web structure trough a "wget" and, since there is a commanda in dockerfile that discompacts a .tar arquive we will be using such a format.    
 ```
 wget http://site1368633667.hospedagemdesites.ws/site1.zip
 ```
@@ -234,11 +234,11 @@ Then we will write the dockerfile content in witch we will define the base memor
 ![Container Run](./Images/running_web_server_container.png)
 
 ## Multistage Images
-Here we will create a double stage image. First we will create the binary of an application and then send it to a Linux container.
+Here we will create a double stage image. First we will create the binary of an application and then send it to a Linux container.   
 
-With multistage it is possible to create compilations in different stages. This way, if my application and my first image are big, when we transfer the application to a smaller image we get a small overall image. 
+With multistage it is possible to create compilations in different stages. This way, if my application and my first image are big, when we transfer the application to a smaller image we get a small overall image.    
 
-Since we are going to use the binary result from the first image, we call the first image as executable in order to be able to import the file in the next stage.
+Since we are going to use the binary result from the first image, we call the first image as executable in order to be able to import the file in the next stage.   
 ```
 FROM golang as exec
 ```
@@ -277,8 +277,27 @@ docker push localhost:5000/image_name:version
 ```
 
 ## Docker Compose
-The Docker Compose tool is used to manage two or more containers. To do that you create a YAML file to define the applications and command them all.
+The Docker Compose tool is used to manage two or more containers. To do that you create a YAML file to define the applications and command them all.   
 
-In the YAML file it is necessary to identify the services, the ports, the volumes and the networks. We also define the YAML version to be used, witch is related to a specific docker version.
+In the YAML file it is necessary to identify the services, the ports, the volumes and the networks. We also define the YAML version to be used, witch is related to a specific docker version.   
 
-In this example we will define a mysql service along with the corresponding image, environment variables, ports, volumes and networks. An adminer container with the same spacifications and the configuration to create my network.
+In this example we will define a mysql service along with the corresponding image, environment variables, ports, volumes and networks. An adminer container with the same spacifications and the configuration to create my network.   
+
+To run the containers: ```docker-compose up -d```   
+To stop the containers: ```docker-compose down```   
+
+### PHP Application Docker Compose
+This application will contain a container with php and alpine, another for my phpadmin and a third for my mysql database.    
+
+First we create a container for the php and the alpine. We also stablish the port, the volumes and networks to be used.   
+```
+web:
+  image:  webdevops/php-apache:alpine-php7
+  ports:
+    - "4500:80"
+  volumes:
+    - /data/php/:/app
+  networks:
+    - my-network
+```
+Using the same logic we create the containers for mysql and myadmin containers.
