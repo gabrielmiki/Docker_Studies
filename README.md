@@ -286,6 +286,14 @@ In this example we will define a mysql service along with the corresponding imag
 To run the containers: ```docker-compose up -d```   
 To stop the containers: ```docker-compose down```   
 
+![Result of the docker-compose run](./Images/Docker_Compose/Docker_Compose_Run.png)
+
+![Adminer page](./Images/Docker_Compose/Adminer.png)        
+
+We will also add a table in order to use the data for the following application.
+
+![Table creation](./Images/Docker_Compose/Table_Creation.png)
+
 ### PHP Application Docker Compose
 This application will contain a container with php and alpine, another for my phpadmin and a third for my mysql database.    
 
@@ -301,3 +309,9 @@ web:
     - my-network
 ```
 Using the same logic we create the containers for mysql and myadmin containers.
+
+![Docker-Compose Run](./Images/PHP_Application/Docker_Compose_Run.png)
+
+![PHP Admin](./Images/PHP_Application/PHP_Admin_Page.png)
+
+![Application output](./Images/PHP_Application/Application_Output.png)
