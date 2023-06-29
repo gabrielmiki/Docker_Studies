@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  apachesrv:
+    image: httpd
+    container_name: my-apache-app
+    volumes:
+      - ./data:/usr/local/apache2/htdocs
+    ports:
+      - '80:80'
