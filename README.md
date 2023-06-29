@@ -315,3 +315,12 @@ Using the same logic we create the containers for mysql and myadmin containers.
 ![PHP Admin](./Images/PHP_Application/PHP_Admin_Page.png)
 
 ![Application output](./Images/PHP_Application/Application_Output.png)
+
+## Docker Swarm    
+Docker resource for container orchastration.
+
+### Cluster
+A cluster is a group of computers working together controled by a software. Each computer in a cluster is called a node.
+
+### Manage and Worker Nodes
+A swarm is composed of two container types: tha manage nodes and the worker nodes. The commands to control the e monitor a swarm are executed in a manage node.
