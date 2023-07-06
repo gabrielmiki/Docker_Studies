@@ -324,3 +324,40 @@ A cluster is a group of computers working together controled by a software. Each
 
 ### Manage and Worker Nodes
 A swarm is composed of two container types: tha manage nodes and the worker nodes. The commands to control the e monitor a swarm are executed in a manage node.
+
+### Virtual Box and Vagrand
+Here we will create two virtual machines with a Vagrantfile and Virtual Box.    
+
+To configure the Vagrantfile, we first define the image we will use: 
+```bento/ubuntu-22.04```
+Than to allow remote access to the vms we set 
+```config.vm.network "public_network"```
+Since we are going to use docker I would like these machines to have it installed already.
+```
+config.vm.provision "shell", path: "install-docker.sh"
+```
+
+To run all the commands we use ```vagrant up``` and after all the processes, in order to enter the created vms we run ```vagrant ssh node_name```.
+
+![Image Download](./Images/Docker_Swarm/Image_Download.png)
+
+![End message](./Images/Docker_Swarm/End_Message.png)
+
+![Virtual Box Machines](./Images/Docker_Swarm/VM_Info.png)
+
+We will now create the cluster: ```docker swarm init --advertise-addr computer_ip```. This command will return a key whitch we will use to add a worker node to our cluster.
+
+![Docker Swarm Start](./Images/Docker_Swarm/Swarm_Start.png)
+
+![Swarm Node Join](./Images/Docker_Swarm/Node_Join.png)
+
+Some docker swarm cluster commands:    
+
+- ```docker service ls```: list the avaiable services
+- ```docker service create --name service_name --replicas replica_numbers -p 80:80 image_name```: create replica_numbers containers of the image_name image in the service_name service
+- ```docker service ps service_name```: shows the created containers configurations
+- ```docker node update --availability drain node_name``` remove all the containers from node_name
+- ```docker service rm service_name```: delete all continers from the service_name 
+
+![Docker Swarm Deploy](./Images/Docker_Swarm/Swarm_Deploy.png)
+![Containers Configs](./Images/Docker_Swarm/Containers_Configs.png)
