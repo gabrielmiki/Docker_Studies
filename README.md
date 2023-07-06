@@ -347,9 +347,9 @@ To run all the commands we use ```vagrant up``` and after all the processes, in 
 
 We will now create the cluster: ```docker swarm init --advertise-addr computer_ip```. This command will return a key whitch we will use to add a worker node to our cluster.
 
-![Docker Swarm Start](./Images/Docker_Swarm/Swarm_Start.png)
+![Docker Swarm Start](./Images/Docker_Swarm/Swarm_Start.jpg)
 
-![Swarm Node Join](./Images/Docker_Swarm/Node_Join.png)
+![Swarm Node Join](./Images/Docker_Swarm/Node_Join.jpg)
 
 Some docker swarm cluster commands:    
 
