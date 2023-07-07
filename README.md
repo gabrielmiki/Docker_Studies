@@ -361,3 +361,13 @@ Some docker swarm cluster commands:
 
 ![Docker Swarm Deploy](./Images/Docker_Swarm/Swarm_Deploy.png)
 ![Containers Configs](./Images/Docker_Swarm/Containers_Configs.png)
+
+### Volumes
+If we create a volume ```docker volume creat app```. Go to the docker volume ```cd /var/lib/docker/volumes/app/_data```. Add an htlm content. Create a service with apache containers to execute the html application ```docker service create --name my-app --replicas 5 -dt -p 80:80 --mount type=volume,src=app,dst=/usr/local/apache2/htdocs httpd```. We will observe that the the data is not the across the nodes.
+
+To fix it we install, on the manager, the nfs-server, define the directory to be replicated and run the command.
+```apt-get install nfs-seerver -y```
+Inside the config file:
+```/var/lib/docker/volumes/app/_data *(rw,sync,subtree_check)```
+The command:
+```exportfs -ar```
