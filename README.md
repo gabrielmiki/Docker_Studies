@@ -351,6 +351,13 @@ We will now create the cluster: ```docker swarm init --advertise-addr computer_i
 
 ![Swarm Node Join](./Images/Docker_Swarm/Node_Join.jpg)
 
+Now we will create a service in the cluster. After we can verify the destribution of the containers in the cluster.     
+
+![Docker Swarm Deploy](./Images/Docker_Swarm/Swarm_Deploy.png)
+![Containers Configs](./Images/Docker_Swarm/Containers_Configs.png)     
+
+If we want to eliminate the containers of our manager node, for some architecture reasons, we can use the command ```docker node update --availability drain manager_node```. 
+
 Some docker swarm cluster commands:    
 
 - ```docker service ls```: list the avaiable services
@@ -359,15 +366,16 @@ Some docker swarm cluster commands:
 - ```docker node update --availability drain node_name``` remove all the containers from node_name
 - ```docker service rm service_name```: delete all continers from the service_name 
 
-![Docker Swarm Deploy](./Images/Docker_Swarm/Swarm_Deploy.png)
-![Containers Configs](./Images/Docker_Swarm/Containers_Configs.png)
-
 ### Volumes
-If we create a volume ```docker volume creat app```. Go to the docker volume ```cd /var/lib/docker/volumes/app/_data```. Add an htlm content. Create a service with apache containers to execute the html application ```docker service create --name my-app --replicas 5 -dt -p 80:80 --mount type=volume,src=app,dst=/usr/local/apache2/htdocs httpd```. We will observe that the the data is not the across the nodes.
+If we create a volume ```docker volume creat app```, go to the docker volume ```cd /var/lib/docker/volumes/app/_data```, add an htlm content, create a service with apache containers to execute the html application ```docker service create --name my-app --replicas 5 -dt -p 80:80 --mount type=volume,src=app,dst=/usr/local/apache2/htdocs httpd```, we will observe that the the data is not the across the nodes.
 
 To fix it we install, on the manager, the nfs-server, define the directory to be replicated and run the command.
 ```apt-get install nfs-seerver -y```
-Inside the config file:
-```/var/lib/docker/volumes/app/_data *(rw,sync,subtree_check)```
-The command:
+Inside the config file we set the location and authorizations:       
+```
+vi /etc/exports   
+/var/lib/docker/volumes/app/_data *(rw,sync,subtree_check)```      
+Than we run the command:
 ```exportfs -ar```
+     
+In the in the worker noder we install the ```nfs-common```, and to verify if we suceed in exporting the file we run: ```showmount -e manager_ip```
