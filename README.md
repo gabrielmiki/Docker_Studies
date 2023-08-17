@@ -379,3 +379,9 @@ Than we run the command:
 ```exportfs -ar```
      
 In the in the worker noder we install the ```nfs-common```, and to verify if we suceed in exporting the file we run: ```showmount -e manager_ip```
+
+### Load Balance
+After creating a cluster and a service, in order to execute the application we need to call certain node.
+
+
+To verify that property we will first create an application that has five containers of a PHP application and one container of an SQL application distributed by our nodes. 
