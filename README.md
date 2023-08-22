@@ -380,15 +380,3 @@ Than we run the command:
 ```exportfs -ar```
      
 In the in the worker noder we install the ```nfs-common```, and to verify if we suceed in exporting the file we run: ```showmount -e manager_ip```
-
-### Load Balance
-After creating a cluster and a service, in order to execute the application we need to call certain node.
-
-To verify that property we will first create an application that has five containers of a PHP application and one container of an SQL application distributed by our nodes.     
-
-In order to do all of that we create a volume to our SQL container: ```docker volume create data```. Then we run our container linking it to the volume previously created: ```docker run -e MYSQL_ROOT_PASSWORD=Senha123 -e MYSQL_DATABASE=my_data --name mysql-A -d -p 3306:3306 --mount type=volume,src=data,dst=/var/lib/mysql mysql```. To access this database we need a SQL Client.       
-
-Now we create an application that stores in our database the host of the container in our cluster we used to execute the application. Inside the ```/var/lib/docker/volumes/app/_data``` we add a PHP file. Finally we are going to create a service in witch the application will run: ```docker service create --name my_app --replicas 3 -dt -p 80:80 --mount type=volume,src=app,dst=/app/ webdevops/php-apache:alpine-php7```. Then the container replicas will be distributed over the nodes. When we call the application via our manager node we observe that the container we use to execute the application is always the same one.        
-
-To destribute the accesses we have to 
-
